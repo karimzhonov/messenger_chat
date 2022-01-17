@@ -1,0 +1,27 @@
+{% extends 'base_login.html' %}
+
+{% block main %}
+    <section class="login">
+        {% if error_message %}
+            <div class="alert alert-danger" style="min-width: 40%">
+                {{ error_message }} is invalid
+            </div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="username">Username</label>
+                <input class="form-control" required type="text" id="username" name="username">
+            </div>
+            <div>
+                <label class="" for="password">Password</label>
+                <input required class="form-control" type="password" id="password" name="password">
+            </div>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-primary mt-3" type="submit">Sign-In</button>
+                <a class="btn btn-secondary mt-3" href="{% url 'register' %}"> Sign-Up</a>
+            </div>
+
+        </form>
+    </section>
+{% endblock %}

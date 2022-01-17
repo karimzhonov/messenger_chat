@@ -1,0 +1,31 @@
+{% extends 'base_login.html' %}
+
+{% block main %}
+    <div class="login">
+        {% for err in error_messages %}
+            <div class="alert alert-danger" style="min-width: 40%">
+                {{ err }} is invalid
+            </div>
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="username">Username</label>
+                <input class="form-control" required type="text" id="username" name="username">
+            </div>
+            <div>
+                <label class="" for="password1">Password</label>
+                <input required class="form-control" type="password" id="password1" name="password1">
+            </div>
+            <div>
+                <label class="" for="password2">Password again</label>
+                <input required class="form-control" type="password" id="password2" name="password2">
+            </div>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-primary mt-3" type="submit">Sign-Up</button>
+                <a class="btn btn-secondary mt-3" href="{% url 'login' %}">Sign-In</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

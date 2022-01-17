@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    {% include 'inc/nav.html' %}
+    <section class="friend_list col-11">
+        <input type="hidden" id="profile_id" value="{{ profile_id }}">
+        <div>
+            <input type="text" id="search_friends" class="mt-3 form-control">
+            <h3>All Users</h3>
+            <div id="users">
+
+            </div>
+
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"
+            integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+
+        function get_btn_mail(userid2) {
+            return `<a href="http://${window.location.host}/app/chat/${userid2}" class="add_btn fas fa-envelope-square" style="color: #2b2b2b; cursor: pointer; font-size: 20px"></a>`
+        }
+
+        function get_html(btn, point) {
+            return `
+                           <div class="d-flex mt-3" style="flex-direction: row; justify-content: space-between; align-items: center">
+                            <div class="d-flex">
+                            <div class="photo" style="background: #cccccc; width: 50px; height: 50px; border-radius: 50%;">
+                                <div class="online"></div>
+                            </div>
+                            <div class='user' style="margin-left: 10px">
+                                <h4>${point.first_name} ${point.last_name}</h4>
+                                <p>@${point.user.username}</p>
+
+                            </div>
+                            </div>
+
+                            ${btn}
+                            </div>
+                        `
+        }
+
+        function user_in_friends(user_id, friends_list) {
+            for (let i = 0; i < friends_list.length; i++) {
+                let point = friends_list[i]
+                if (point === user_id) {
+                    return true
+                }
+            }
+            return false
+        }
+
+        const input_search = document.querySelector('#search_friends')
+        const profile_id = parseInt(document.getElementById('profile_id').value)
+        const friends = []
+        const others = []
+
+        async function fetch_profiles(text = '') {
+            let url
+            if (text.length === 0) {
+                url = `http://${window.location.host}/app/rest/profiles/`
+            } else {
+                url = `http://${window.location.host}/app/rest/search_profiles/${text}/`
+            }
+            const users = document.getElementById('users')
+            users.innerHTML = ''
+            await axios.get(url).then(response => response.data).then(data => {
+                data.forEach(point => {
+                    const url_user = `http://${window.location.host}/app/rest/user/${point.user}/`
+                    axios.get(url_user).then(p => p.data).then(json => {
+                        let user_id = point.user
+                        point.user = json
+                        point.is_friend = user_in_friends(profile_id, point.friends)
+                        users.insertAdjacentHTML('beforeend', get_html(get_btn_mail(user_id), point))
+                    })
+
+                })
+            })
+        }
+
+        {#async function fetch_all() {#}
+        {#    const users = document.getElementById('users')#}
+        {#    users.innerHTML = ''#}
+        {##}
+        {#    await axios.get(url).then(response => response.data).then(data => {#}
+        {#        data.forEach(point => {#}
+        {#            const url_user = `http://${window.location.host}/app/rest/user/${point.user}/`#}
+        {#            axios.get(url_user).then(p => p.data).then(json => {#}
+        {#                point.user = json#}
+        {#                point.is_friend = user_in_friends(profile_id, point.friends)#}
+        {#                users.insertAdjacentHTML('beforeend', get_html(btn_mail, point))#}
+        {#            })#}
+        {##}
+        {#        })#}
+        {#    })#}
+
+
+        fetch_profiles()
+        input_search.addEventListener('input', () => {
+            const text = input_search.value
+            if (text.length) {
+                fetch_profiles(text)
+            } else {
+                fetch_profiles()
+            }
+        })
+
+        const add_btns = document.querySelectorAll('.add_btn')
+        add_btns.forEach(point => {
+            point.addEventListener('click', () => {
+                point.classList.remove('fa-user-plus')
+                point.classList.add('fa-check-circle')
+            })
+        })
+    </script>
+
+{% endblock %}
