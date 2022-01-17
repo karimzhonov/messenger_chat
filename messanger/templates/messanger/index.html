@@ -20,7 +20,7 @@
                         <div class="response">
                             <div class="text" style="padding:10px 20px 10px 20px">
                                 <h6>{{ message.text }}</h6>
-                                <p class="text-info" style="text-align: left">{{ message.date_time|time }}, {{ message.date_time|date }}</p>
+                                <p class="text-info" style="text-align: left">{{ message.date_time|time:"H:i" }}, {{ message.date_time|date }}</p>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                             <div class="text" style="padding:10px 50px 10px 20px">
                                 <h4>{{ message.from_user.get_full_name }}</h4>
                                 <h6>{{ message.text }}</h6>
-                                <p class="text-info" style="text-align: right">{{ message.date_time|time }}, {{ message.date_time|date }}</p>
+                                <p class="text-info" style="text-align: right">{{ message.date_time|time:"H:i" }}, {{ message.date_time|date }}</p>
                             </div>
 
                     </div>

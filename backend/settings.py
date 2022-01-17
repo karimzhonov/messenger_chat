@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2nx!uapvr7vl9z%xuo%ut+vyjhu4x0t_@-y2!lt2)k-lim!gj6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kht-messanger.herokuapp.com']
+ALLOWED_HOSTS = ['kht-messanger.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
@@ -77,9 +77,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-from config_database import DATABASES as MYDATASET
 
-DATABASES = MYDATASET
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd8peiitfecv59i',
+        'USER': 'skhezvzapclfaa',
+        'PASSWORD': 'd5de5cf34e76db361352a932c40e30780942bf81c5a099a387bbd341cae15c44',
+        'HOST': 'ec2-52-31-217-108.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
