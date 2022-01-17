@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2nx!uapvr7vl9z%xuo%ut+vyjhu4x0t_@-y2!lt2)k-lim!gj6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://kht-messanger.herokuapp.com']
 
 # Application definition
 
@@ -136,11 +136,13 @@ REST_FRAMEWORK = {
 }
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
-  'http://localhost:8000',
+    'http://localhost:8000',
+    'https://kht-messanger.herokuapp.com',
 )
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://localhost:8000",
     "http://127.0.0.1:8080",
     "http://127.0.0.1:8000",
+    'https://kht-messanger.herokuapp.com',
 ]
