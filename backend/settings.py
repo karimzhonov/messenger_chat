@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2nx!uapvr7vl9z%xuo%ut+vyjhu4x0t_@-y2!lt2)k-lim!gj6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://kht-messanger.herokuapp.com']
+ALLOWED_HOSTS = ['kht-messanger.herokuapp.com']
 
 # Application definition
 
